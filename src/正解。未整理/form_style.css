@@ -1,0 +1,125 @@
+/* .debug *, .debug {
+      outline: 1px solid gold;
+    } */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-style: '微軟正黑體';
+}
+
+/* 背景顏色 */
+body {
+  background: #dddddd;
+}
+    
+/* 表單 */
+.form {
+  border-top: solid 8px #fad312;
+  width: 645px;
+  height: 1085px;
+  margin: 130px auto 70px auto;
+  padding: 54px 42px;
+  box-shadow: 1.8px 2.4px 5px 0 rgba(0, 0, 0, 0.3);
+  background-color: white;
+} 
+    
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 35px;
+}
+
+h2 {
+  font-size: 20px;
+  text-align: left;
+  font-weight: normal;
+  margin-bottom: 20px;
+
+}
+
+p, .radio {
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+/* * 必填 */
+.mark_p {
+  color: red;   
+}
+
+.form_block_top {
+  margin-bottom: 50px;
+}
+
+.form_block {
+  margin-bottom: 50px;
+}
+
+.button {
+  width: 92px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: #fad312;
+  border: none;
+  font-size: 15px;
+  margin: 10px 0 20px 0;
+}
+
+input {
+  border: solid 1px #d0d0d0;
+
+}
+
+/* 改變預設文字的大小 */
+::placeholder {
+  font-size: 16px;
+  color: #afafaf;
+}  
+
+.check_item::after {
+  content:attr(check_symbol);
+  color: red;
+}
+
+.other > h2 {
+  margin: 0;
+}
+
+.other > p {
+  padding: 12px 0 24px 0;
+}
+      
+footer {
+  width:100%;
+  background-color:#000000;
+  color:#999999;  
+
+  text-align:center;
+  line-height: 60px;
+}
+
+.required_field {
+  color: red;
+  font-size: 14px;
+  margin-top: 0.5rem;
+  position: absolute;
+}
+
+.hide_error .hide{
+  visibility:hidden;
+
+}
+
+@media(max-width: 768px) {
+  .form{
+    width: 80%;
+  }
+  h1 {
+    font-size: 28px;
+  }
+}  
+/* 
+.required input[type="text email"] {
+  background-color: green;
+} */

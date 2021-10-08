@@ -55,7 +55,6 @@ function FormItem() {
     how_know: ''
   })
 
-  // 以後有更多不需檢查的話可以放這
   const [noNeedCheckContent, setNoNeedCheckContent] = useState({
     suggest: ''
   })
@@ -72,6 +71,10 @@ function FormItem() {
   const handleChange = (e) => {
     const inputName = e.target.name
     const val = e.target.value
+    // console.log('inputName = ',inputName)
+    // console.log('formContent[inputName] = ', formContent[inputName])
+    // console.log('val = ', val)
+    
     setFormContent({
       ...formContent,
       [inputName]: val 
@@ -90,11 +93,16 @@ function FormItem() {
 
   // 送出表單
   const handleSubmit = e => {
+    console.log('送出表單 => ', formContent)
+    console.log('hasError 狀態 => ', hasError)
+
     let isValid = true
 
     // 遍歷 forContent ，檢查裡面是否都有值
     for (let name in formContent) {
       if (!formContent[name]) {
+        console.log(name , '裡面沒有值', formContent[name])
+        
         setHasError(hasError => {
           return {
             ...hasError,
@@ -109,18 +117,21 @@ function FormItem() {
             [name]: false
           }
         })        
+        console.log(name, '裡面有值')
       }
     }
 
     // 都有輸入才跑到這
     if (isValid) {
+      console.log('都沒錯,現在的 formContent = ', formContent)
+      console.log('都沒錯,現在的 noNeedCheckContent = ', noNeedCheckContent)
       alert(`
         暱稱：${formContent.nickname}
         信箱：${formContent.email}
         電話：${formContent.phone}
         報名類型：${formContent.sign_type}
         如何得知活動：${formContent.how_know}
-        ${ noNeedCheckContent.suggest && '對活動的建議：'+ noNeedCheckContent.suggest}
+        ${ noNeedCheckContent.suggest && '任何建議：'+ noNeedCheckContent.suggest}
       `)
     }
     e.preventDefault();
@@ -182,7 +193,8 @@ function FormItem() {
             value="躺在床上用想像力實作" 
             name="sign_type" 
             id="on_bed" 
-            onChange={handleChange} />
+            onChange={handleChange}
+            />
           <label htmlFor="on_bed">躺在床上用想像力實作</label>  
         </div>
         <div className="radio">
@@ -191,7 +203,8 @@ function FormItem() {
             value="趴在地上滑手機找現成的" 
             name="sign_type" 
             id="on_ground" 
-            onChange={handleChange} />
+            onChange={handleChange}
+            />
           <label htmlFor="on_ground">趴在地上滑手機找現成的</label>
           <ErrMessage hasError={hasError.sign_type} >報名類型為必填喲！</ErrMessage>
         </div>

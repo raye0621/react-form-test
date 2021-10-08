@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新拖延運動</title>
+  <!-- CSS用 -->
+  <link rel="stylesheet" href="./form_style.css" />
+  <!-- 初始化 normalize -->
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+</head>
+<body>
+  <div class="bg debug">
+    <form class="form">
+      <h1>新拖延運動報名表單</h1>
+      
+      <!-- 時間地點 -->
+      <div class="form_block_top">
+        <p>活動日期：2020/12/10～2020/12/11</p>
+        <p>活動地點：台北市大安區新生南路二段 1 號</p>
+        <p class="mark_p">* 必填</p>
+      </div>
+
+      <!-- 暱稱 -->
+      <div class="form_block required hide_error">          
+        <label for="nickname"><h2 class="check_item" check_symbol=" *">暱稱</h2></label>
+        <input type="text" name="nickname" placeholder="您的回答" id="nickname"> 
+        <div class="required_field hide">暱稱為必填喲！</div>
+      </div>
+
+      <!-- 電子郵件 -->
+      <div class="form_block required hide_error">
+        <label for="email" ><h2 class="check_item" check_symbol=" *">電子郵件</h2></label>
+        <input type="email" name="email" placeholder="您的電子郵件" id="email"> 
+        <div class="required_field hide">電子郵件為必填喲！</div>
+      </div>
+
+      <!-- 手機號碼 -->
+      <div class="form_block required hide_error">
+        <label for="tel"><h2 class="check_item" check_symbol=" *">手機號碼</h2></label>
+        <input type="tel" name="tel" placeholder="您的手機號碼" id="tel"> 
+        <div class="required_field hide">手機號碼為必填喲！</div>
+      </div>
+
+      <!-- 報名類型 -->
+      <div class="form_block required hide_error">
+        <h2 class="check_item" check_symbol=" *">
+          報名類型
+        </h2>
+        <div class="radio">
+          <input type="radio" value="躺在床上用想像力實作" name="sign_type" id="on_bed">
+          <label for="on_bed">躺在床上用想像力實作</label>  
+        </div>
+        <div class="radio">
+          <input type="radio" value="趴在地上滑手機找現成的" name="sign_type" id="on_ground">
+          <label for="on_ground">趴在地上滑手機找現成的</label>
+          <div class="required_field hide">報名類型為必填喲！</div>
+        </div>
+      </div>
+
+      <!-- 怎麼知道這活動的 -->
+      <div class="form_block required hide_error">
+        <label for="how_know"><h2 class="check_item" check_symbol=" *">怎麼知道這個活動的？</h2></label>
+        <input type="text" name="how_know" placeholder="您的回答" id="how_know"> 
+        <div class="required_field hide">怎麼知道這個活動為必填喲！</div>
+      </div>
+
+      <!-- 其他 -->
+      <div class="form_block">
+        <label for="suggest" class="other">
+          <h2>其他</h2>
+          <p>對活動的一些建議</p>
+        </label>
+        <input type="text" name="suggest" placeholder="您的回答" id="suggest"> 
+      </div>
+
+      <!-- 提交按鈕 -->
+      <input class="button" type="submit"  value="提交">
+      <p>請勿透過表單送出您的密碼。</p>
+    </form>
+  </div>
+  
+  <!-- footer -->
+  <footer class="footer">
+    © 2020 © Copyright. All rights Reserved.
+  </footer>
+
+
+  <!-- javascript -->
+  <script>
+    document.querySelector('form').addEventListener('submit', 
+      function(e) {
+        e.preventDefault()                                              // 阻止送出
+        let hasError = false                                            // 如果為 true 則代表必輸入欄位皆有值，進入 alert
+        let values = {}                                                 // 最後 alert 時的輸入值
+        let titles = []                                                 // 最後 alert 時的標題
+        const elements = document.querySelectorAll('.required')
+        for(element of elements) {
+          const title = element.querySelector('h2').innerText           // 抓出標題 用抓取 <h2> 裡面 innerText 的方式，最後 alert 的時候使用
+          titles.push(title)          
+          const radios = element.querySelectorAll('input[type=radio]')  // 這兩個用來判斷輸入欄位以及選擇欄位
+          const input = element.querySelector('input[type=text], input[type=tel], input[type=email]')
+          let isValid = true                                            // isvalid 用以判斷必輸入欄位內有無值
+          if (input) {
+            values[input.name] = input.value
+
+            console.log('input 裡面的 value', values)
+
+            if (!input.value) {
+              isValid = false
+            }
+          } else if (radios.length) {     // 忘記為什麼要用 .length
+            isValid = [...radios].some(radio => radio.checked)
+
+            console.log('radio 裡面的 radios', radios.length)
+
+            if (isValid) {
+
+              console.log('radios 裡面的 value', values)
+
+              let r = element.querySelector('input[type=radio]:checked')
+              values[r.name] = r.value
+            }
+          } else {
+            continue
+          }
+          
+          if (!isValid) {
+            
+            console.log('456')
+              
+            element.classList.remove('hide_error')
+            hasError = true
+          } else {
+            element.classList.add('hide_error')
+          }
+        }
+          
+        if (!hasError) {     // 最後判斷，如果必輸入欄位內都有值的話 hasError 為 true 就可以成功 alert 
+          let result=''
+          const output = Object.values(values)
+          for (let i = 0; i<titles.length; i++) {
+            result += `${titles[i]}：${output[i]}\n`
+          }
+          result += `\n 謝謝助教，辛苦了Orzz`
+          alert(result)
+        }
+      }
+    )
+  </script>
+</body>
+</html>
